@@ -1,22 +1,10 @@
 <?php
-include '../function.php';
+require '../function.php';
 
-if (isset($_POST["submit"])) {
-    if (tambahBarang($_POST) > 0) {
-        echo "
-            <script>
-                alert('data berhasil ditambahkan');
-                document.location.href ='barang.php';
-            </script>
-        ";
-    } else {
-        echo "<script>
-                alert('data gagal ditambahkan');
-            </script>";
-    }
-}
+$barang = query("SELECT * FROM barang");
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,7 +111,7 @@ if (isset($_POST["submit"])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Tambah Barang</h1>
+                            <h1 class="m-0">TRANSAKSI</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
 
@@ -137,63 +125,59 @@ if (isset($_POST["submit"])) {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
-                            <!-- Main content -->
+                                                        <!-- Main content -->
                             <div class="invoice p-3 mb-3">
+
+
                                 <!-- Table row -->
                                 <div class="row">
                                     <div class="col-12 table-responsive">
-                                        <form action="" method="post">
-                                            <div class="card-body">
-                                                <!-- <div class="form-group">
-                                                    <label for="id_barang">Bottom Border only </label>
-                                                    <input type="text" class="form-control form-control-border" name="id_barang" id="id_barang" placeholder="id_barang">
-                                                </div> -->
-                                                <div class="form-group">
-                                                    <label for="namaBarang">Nama Barang </label>
-                                                    <input type="text" class="form-control form-control-border" name="namaBarang" id="namaBarang" placeholder="Nama Barang">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="merk">Merek</label>
-                                                    <input type="text" class="form-control form-control-border" name="merk" id="merk" placeholder="merk">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="hargaBeli">Harga Beli</label>
-                                                    <input type="text" class="form-control form-control-border" name="hargaBeli" id="hargaBeli" placeholder="Harga Beli">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="hargaJual">Harga Jual</label>
-                                                    <input type="text" class="form-control form-control-border" name="hargaJual" id="hargaJual" placeholder="Harga Jual">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="stok">Stok</label>
-                                                    <input type="text" class="form-control form-control-border" name="stok" id="stok" placeholder="stok">
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <!-- textarea -->
-                                                            <div class="form-group">
-                                                                <label>Textarea</label>
-                                                                <textarea class="form-control" rows="3" name="deskripsi" placeholder="Enter ..."></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
-                                                </div>
-                                            </div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID barang</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Merk</th>
+                                                    <th>Harga</th>
+                                                    <th>stok</th>
+                                                    <th>Aksi</th>
+                                                    
+                                                </tr>
+                                            </thead>
 
-                                        </form>
+                                            <tbody>
 
-                                        <!-- /.col -->
+                                                <?php foreach ($barang as $row) : ?>
+                                                    <tr>
+                                                        <td><?= $row["id_barang"] ?></td>
+                                                        <td><?= $row["namaBarang"]; ?></td>
+                                                        <td><?= $row["merk"]; ?></td>
+                                                        <td><?= $row["hargaJual"] ?></td>
+                                                        <td><?= $row["stok"] ?></td>
+
+                                                        <td>
+                                                            <a href="editBarang.php?id_barang=<?= $row["id_barang"]; ?>">
+                                                                <div class="btn btn-primary btn-flat">
+                                                                    <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                                                                    Tambah
+                                                                </div>
+                                                            </a>
+
+                                                        </td>
+                                                    </tr>
+
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <!-- /.row -->
+                                    <!-- /.col -->
                                 </div>
-                                <!-- /.invoice -->
-                            </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container-fluid -->
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.invoice -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
         </div>

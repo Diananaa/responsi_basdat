@@ -115,5 +115,40 @@ function tambahBarang($data)
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+}
 
+function query($query)
+{
+    global $conn;
+    $result = mysqli_query($conn, $query);
+    $rows = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
+function ubahBarang($data){
+    global $conn;
+    $id_barang=$data["id_barang"];
+    $namaBarang = htmlspecialchars($data["namaBarang"]);
+    $merk = htmlspecialchars($data["merk"]);
+    $hargaBeli = htmlspecialchars($data["hargaBeli"]);
+    $hargaJual = htmlspecialchars($data["hargaJual"]);
+    $stok = htmlspecialchars($data["stok"]);
+    $deskripsi = htmlspecialchars($data["deskripsi"]);
+    
+    $query = "UPDATE barang SET 
+    
+    namaBarang='$namaBarang',
+    merk='$merk',
+    hargaBeli='$hargaBeli',
+    hargaJual='$hargaJual',
+    stok='$stok',
+    deskripsi='$deskripsi'
+    WHERE id_barang=$id_barang
+    ";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
 }
