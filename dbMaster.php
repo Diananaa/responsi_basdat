@@ -34,6 +34,7 @@ class Database {
         $_values=array_values($data);
         $fieldNames=implode(",",$_keys);
         $fieldValues=implode(",",$_values);
+        var_dump("insert into $table ($fieldNames) values($fieldValues)");
         return $database->query("insert into $table ($fieldNames) values($fieldValues)");
     }
 
@@ -44,19 +45,20 @@ class Database {
             array_push($_arraySql,"$key = '$value'");
         }
         $sqlUpdate=implode(",",$_arraySql);
-        var_dump("update ".self::$table." set $sqlUpdate where ".self::$primaryKey."= ". $this->{self::$primaryKey});
-        return self::rawQuery("update ".self::$table." set $sqlUpdate where ".self::$primaryKey."= ". $this->{self::$primaryKey});
+        // var_dump("update ".static::$table." set $sqlUpdate where ".static::$primaryKey."= ". $this->{static::$primaryKey});
+        return self::rawQuery("update ".static::$table." set $sqlUpdate where ".static::$primaryKey."= ". $this->{static::$primaryKey});
     }
 
     static public function findByKey($idKey){
         $result=self::getWhereData(static::$primaryKey." = '$idKey'");
-        if(count($result))
-        return new static($result);
-
+        
+        if(count($result)>0){
+        return new static($result[0]);
+        }
     }
 
     static public function getWhereData($whereSql,Array $fieldArray=null){
-       
+        
         if($fieldArray!=null){
             $_values=array_values($fieldArray);
             $field=implode(",",$_values);

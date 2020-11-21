@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2020 at 04:12 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
+-- Generation Time: Nov 21, 2020 at 04:29 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,7 +43,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `namaBarang`, `merk`, `hargaBeli`, `hargaJual`, `stok`, `deskripsi`) VALUES
-(1, 'hd', 'hj', 576, 5465, 767, 'dbfsdfd');
+(1, 'hello testing', 'hj', 576, 5465, 767, 'dbfsdfd'),
+(2, 'hd', 'hj', 576, 5465, 767, 'dbfsdfd');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,29 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`nama_toko`, `nama_pemilik`, `email`, `alamat`, `gambar`, `password`) VALUES
-('DianaOk', 'Diana', 'admin@admin.com', 'jl.Rindang Banua Ujung', '', '$2y$10$IdVfvbLlNyPapxKx5FdeYeGQs7JG8Sz3yiPxo.MiKT4CR12syHdce');
+('DianaOk', 'Diana', 'admin@admin.com', 'jl.Rindang Banua Ujung', '', '$2y$10$IdVfvbLlNyPapxKx5FdeYeGQs7JG8Sz3yiPxo.MiKT4CR12syHdce'),
+('asd', 'asd', 'asda@gmail.com', 'asd', '', '$2y$10$1ZXA/QhCuzaGHnfvl/xSyeTY/ct1Udoluc3Hzd.uR7yn/8Bu9X/52'),
+('testing', 'asd', 'testing1@gmail.com', 'testing1@gmail.com', '', '$2y$10$SSyk3vy6jwd1b7ruHhEXoe0WyiTJXPGwhr.5CtjZ6eaJehl5yEQju');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `nim` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `nim`, `nama`, `password`) VALUES
+(7, '20181000001', 'Diana', '$2y$10$Lwx0S3JKSr7jjxiqW99nBuLnVhM7wrEXrjT7RZcN/RBcR6FmURc3i');
 
 --
 -- Indexes for dumped tables
@@ -83,6 +107,12 @@ ALTER TABLE `toko`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -90,7 +120,13 @@ ALTER TABLE `toko`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

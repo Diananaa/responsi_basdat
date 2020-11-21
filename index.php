@@ -1,30 +1,28 @@
 <?php
-include 'admin/function.php';
+// include 'admin/function.php';
+include "db.php";
+$error=false;
 session_start();
 if(isset($_SESSION["login"])){
     header("Location: admin/index.php");
     exit;
 }
 
-if( isset($_POST["login"])){
+if( isset($_POST["nim"])){
     $nim = $_POST["nim"];
     $password = $_POST["password"];
-
-   $result= mysqli_query($conn, "SELECT * FROM users WHERE nim= '$nim'");
-
-//    cek username
-   if(mysqli_num_rows($result) === 1){
-    // cek password
-    $row = mysqli_fetch_assoc($result);
-    if (password_verify($password, $row["password"])){
-        // set session
+    
+    $result=User::getWhereData("nim = '$nim'");
+//    $result= mysqli_query($conn, "SELECT * FROM users WHERE nim= '$nim'");
+    if(count($result)>0){
+        if(password_verify($password,$result[0]['password'])){
+            
         $_SESSION["login"] = true;
-     header("Location: admin/index.php");
+        header("Location: admin/index.php");
 
         exit;
+        }
     }
-   }
-
    $error = true;
 }
 
@@ -46,13 +44,7 @@ if( isset($_POST["login"])){
     <!-- Theme style -->
     <link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
 </head>
-<?php 
-include "db.php";
-// var_dump(;
-if(count($_POST)>0){
-    
-}
-?>
+
 <body class="hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
@@ -62,14 +54,15 @@ if(count($_POST)>0){
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
+                <?php 
+                if($error){
+                ?>
+                <p class="text-center text-danger">Nim atau Password tidak sesuai</p>
+                <?php }
+                ?>
                 <form action="" method="post">
                     <div class="input-group mb-3">
-<<<<<<< HEAD
-                        <input type="email" class="form-control" placeholder="Email" name="email">
-=======
-                        <input type="email" class="form-control" placeholder="Email" name="">
->>>>>>> 59549c9ed2c55bbca2465314afb007e9b052da66
+                        <input type="text" class="form-control" placeholder="NIM" name="nim">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
