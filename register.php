@@ -1,5 +1,6 @@
 <?php
 include 'admin/function.php';
+
 if(isset($_POST["submit"])){
 // var_dump([$_POST]);
     // cek error
@@ -46,7 +47,7 @@ if(isset($_POST["submit"])){
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Mendaftar Supermarket Baru</p>
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data" >
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="nama_toko" placeholder="nama Supermarket">
                         <div class="input-group-append">

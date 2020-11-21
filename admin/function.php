@@ -1,9 +1,9 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "diana-responsi");
-
+// $conn = mysqli_connect("localhost", "root", "", "diana-responsi");
+include dirname(__DIR__)."\db.php";
 function register($data)
 {
-    global $conn;
+    // global $conn;
     $nama_toko = htmlspecialchars($data["nama_toko"]);
     $nama_pemilik = htmlspecialchars($data["nama_pemilik"]);
     $email = htmlspecialchars($data["email"]);
@@ -19,8 +19,8 @@ function register($data)
 
     // password
     // cek username sudah ada atau belum
-    $result = mysqli_query($conn, "SELECT email FROM toko WHERE email = '$email'");
-    if (mysqli_fetch_assoc($result)) {
+    $result = Toko::getWhereData("email = '$email'");
+    if (count($result)>0) {
         echo "<script>
                 alert('email yang dipilih sudah terdaftar')
             </script>";
@@ -38,12 +38,18 @@ function register($data)
     $password = password_hash($password, PASSWORD_DEFAULT);
     // $password = md5($password);
 
-    $query = "INSERT INTO toko VALUES
-        ('$nama_toko','$nama_pemilik','$email','$alamat','','$password')";
-    print_r($query);
-    mysqli_query($conn, $query);
-
-    return mysqli_affected_rows($conn);
+    // $query = "INSERT INTO toko VALUES
+    //     ('$nama_toko','$nama_pemilik','$email','$alamat','','$password')";
+    // print_r($query);
+    // mysqli_query($conn, $query);
+    return Toko::saveData([
+        "nama_toko"=>"'$nama_toko'",
+        "nama_pemilik"=>"'$nama_pemilik'",
+        "email"=>"'$email'",
+        "alamat"=>"'$email'",
+        "password"=>"'$password'"
+    ]);
+    // return mysqli_affected_rows($conn);
 }
 function upload()
 {
@@ -51,7 +57,7 @@ function upload()
     $ukuranFIle = $_FILES['gambar']['size'];
     $error = $_FILES['gambar']['error'];
     $tmpName = $_FILES['gambar']['tmp_name'];
-
+    
     // cek apakah tidak ada gambar yg diupload
     if ($error === 4) {
         echo "<script>
