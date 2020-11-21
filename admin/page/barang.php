@@ -1,3 +1,10 @@
+<?php
+require '../function.php';
+
+$barang = query("SELECT * FROM barang");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,19 +153,26 @@
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
+                                            
                                             <tbody>
+                                            <?php $i=1?>
+                                            <?php foreach($barang as $row): ?>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Call of Duty</td>
-                                                    <td>455-981-221</td>
-                                                    <td>El snort testosterone trophy driving gloves handsome</td>
-                                                    <td>$64.50</td>
+                                                    <td><?= $i; ?></td>
+                                                    <td><?= $row["namaBarang"]; ?></td>
+                                                    <td><?= $row["merk"]; ?></td>
+                                                    <td><?= $row["hargaBeli"]; ?></td>
+                                                    <td><?= $row["hargaJual"] ?></td>
+                                                    <td><?= $row["stok"] ?></td>
+                                                    <td><?= $row["deskripsi"] ?></td>
+
                                                     <td>
-                                                    <button type="button" class="btn btn-success "> Edit</button>
+                                                    <a href="editBarang.php?id_barang=<?= $row["id_barang"]; ?>"><button type="button" class="btn btn-success "> Edit</button></a>
                                     
                                                     </td>
                                                 </tr>
-                                                
+                                            <?php $i++ ?>    
+                                            <?php endforeach;?>
                                             </tbody>
                                         </table>
                                     </div>

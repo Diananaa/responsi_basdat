@@ -1,3 +1,34 @@
+<?php
+include 'admin/function.php';
+session_start();
+if(isset($_SESSION["login"])){
+    header("Location: admin/index.php");
+    exit;
+}
+
+if( isset($_POST["login"])){
+    $nim = $_POST["nim"];
+    $password = $_POST["password"];
+
+   $result= mysqli_query($conn, "SELECT * FROM users WHERE nim= '$nim'");
+
+//    cek username
+   if(mysqli_num_rows($result) === 1){
+    // cek password
+    $row = mysqli_fetch_assoc($result);
+    if (password_verify($password, $row["password"])){
+        // set session
+        $_SESSION["login"] = true;
+     header("Location: admin/index.php");
+
+        exit;
+    }
+   }
+
+   $error = true;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +59,7 @@
 
                 <form action=" " method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" placeholder="Email" name="">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>

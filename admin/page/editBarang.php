@@ -1,11 +1,15 @@
 <?php
 include '../function.php';
 
+$id_barang = $_GET["id_barang"];
+$barang = query("SELECT * FROM barang WHERE id_barang = $id_barang")[0];
+
+
 if (isset($_POST["submit"])) {
-    if (tambahBarang($_POST) > 0) {
+    if (ubahBarang($_POST) > 0) {
         echo "
             <script>
-                alert('data berhasil ditambahkan');
+                alert('data berhasil diubah');
                 document.location.href ='barang.php';
             </script>
         ";
@@ -144,43 +148,44 @@ if (isset($_POST["submit"])) {
                                     <div class="col-12 table-responsive">
                                         <form action="" method="post">
                                             <div class="card-body">
-                                                <!-- <div class="form-group">
-                                                    <label for="id_barang">Bottom Border only </label>
-                                                    <input type="text" class="form-control form-control-border" name="id_barang" id="id_barang" placeholder="id_barang">
-                                                </div> -->
+
+
+                                                <input type="hidden" class="form-control form-control-border" name="id_barang" id="id_barang" placeholder="id_barang">
+
                                                 <div class="form-group">
                                                     <label for="namaBarang">Nama Barang </label>
-                                                    <input type="text" class="form-control form-control-border" name="namaBarang" id="namaBarang" placeholder="Nama Barang">
+                                                    <input type="text" class="form-control form-control-border" name="namaBarang" id="namaBarang" value="<?= $barang["namaBarang"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="merk">Merek</label>
-                                                    <input type="text" class="form-control form-control-border" name="merk" id="merk" placeholder="merk">
+                                                    <input type="text" class="form-control form-control-border" name="merk" id="merk" value="<?= $barang["merk"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="hargaBeli">Harga Beli</label>
-                                                    <input type="text" class="form-control form-control-border" name="hargaBeli" id="hargaBeli" placeholder="Harga Beli">
+                                                    <input type="text" class="form-control form-control-border" name="hargaBeli" id="hargaBeli" value="<?= $barang["hargaBeli"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="hargaJual">Harga Jual</label>
-                                                    <input type="text" class="form-control form-control-border" name="hargaJual" id="hargaJual" placeholder="Harga Jual">
+                                                    <input type="text" class="form-control form-control-border" name="hargaJual" id="hargaJual" value="<?= $barang["hargaJual"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="stok">Stok</label>
-                                                    <input type="text" class="form-control form-control-border" name="stok" id="stok" placeholder="stok">
+                                                    <input type="text" class="form-control form-control-border" name="stok" id="stok" value="<?= $barang["stok"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <!-- textarea -->
+                                                          
                                                             <div class="form-group">
                                                                 <label>Textarea</label>
-                                                                <textarea class="form-control" rows="3" name="deskripsi" placeholder="Enter ..."></textarea>
+                                                                <textarea class="form-control" rows="3" name="deskripsi" placeholder="Enter ..."><?= $barang["deskripsi"] ?></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                                 <div class="card-footer">
-                                                    <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
+                                                    <button type="submit" name="submit" class="btn btn-primary">Ubah Data Barang</button>
                                                 </div>
                                             </div>
 
